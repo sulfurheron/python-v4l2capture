@@ -80,21 +80,24 @@ static struct capability capabilities[] = {
 static int my_ioctl(int fd, int request, void *arg)
 {
   // Retry ioctl until it returns without being interrupted.
+  int result = 0;
 
   for(;;)
     {
-      int result = v4l2_ioctl(fd, request, arg);
+      Py_BEGIN_ALLOW_THREADS
+      result = v4l2_ioctl(fd, request, arg);
+      Py_END_ALLOW_THREADS
 
-      if(!result)
-	{
-	  return 0;
-	}
+      if (!result)
+	    {
+	      return 0;
+	    }
 
-      if(errno != EINTR)
-	{
-	  PyErr_SetFromErrno(PyExc_IOError);
-	  return 1;
-	}
+      if (errno != EINTR)
+        {
+          PyErr_SetFromErrno(PyExc_IOError);
+          return 1;
+        }
     }
 }
 
