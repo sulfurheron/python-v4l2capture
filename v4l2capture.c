@@ -887,7 +887,7 @@ PyMODINIT_FUNC PyInit_v4l2capture(void)
   static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
     "v4l2capture",
-    "Capture video with video4linux2.",
+    "Capture video with video4linux2 (release-GIL-version).",
     -1,
     module_methods,
     NULL,
